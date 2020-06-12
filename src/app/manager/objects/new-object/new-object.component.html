@@ -1,0 +1,32 @@
+<div class="modal-header">
+  <div class="modal-title"><h2>Add new object</h2></div>
+</div>
+
+<form (ngSubmit)="submit()" #form="ngForm">
+  <div class="modal-body">
+
+    <div class="form-group">
+      <label for="name">Name</label>
+      <textarea class="form-control" id="name" [(ngModel)]="objectPost.name" name="name" required></textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="type">Type</label>
+      <select class="form-control" id="type" [(ngModel)]="objectPost.objectTypeCode" name="objectTypeCode" required>
+        <option class="form-control-range" *ngFor="let objectType of objectTypes$ | async" [value]="objectType.code">{{objectType.name}}</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="client">Client</label>
+      <select class="form-control" id="client" [(ngModel)]="objectPost.clientId" name="clientId" required>
+        <option class="form-control-range" *ngFor="let client of clients" [value]="client.id">{{client.name}} {{client.surname}}</option>
+      </select>
+    </div>
+
+  </div>
+  <div class="modal-footer">
+    <button type="submit" [disabled]="form.invalid" class="btn btn-success">Submit</button>
+    <button class="btn btn-danger" (click)="modal.dismiss()">Cancel</button>
+  </div>
+</form>

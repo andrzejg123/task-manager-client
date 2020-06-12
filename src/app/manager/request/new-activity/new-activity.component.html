@@ -1,0 +1,36 @@
+<div class="modal-header">
+  <div class="modal-title"><h2>Add new activity</h2>
+    <h6><b>to: </b> "{{request.description}}"</h6>
+  </div>
+
+</div>
+
+<form (ngSubmit)="submit()" #form="ngForm">
+  <div class="modal-body">
+
+    <div class="form-group">
+      <label for="description">Description</label>
+      <textarea class="form-control" id="description" [(ngModel)]="activityPost.description" name="description" required></textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="type">Type</label>
+      <select class="form-control" id="type" [(ngModel)]="activityPost.activityTypeCode" name="activityTypeCode" required>
+        <option class="form-control-range" *ngFor="let activityType of activityTypes" [value]="activityType.code">{{activityType.name}}</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="worker">Worker</label>
+      <select class="form-control" id="worker" [(ngModel)]="activityPost.workerId" name="workerId" required>
+        <option class="form-control-range" *ngFor="let worker of workers" [value]="worker.id">{{worker.name}} {{worker.surname}}</option>
+      </select>
+    </div>
+
+  </div>
+  <div class="modal-footer">
+    <button type="submit" [disabled]="form.invalid" class="btn btn-success">Submit</button>
+    <button class="btn btn-danger" (click)="modal.dismiss()">Cancel</button>
+  </div>
+</form>
+

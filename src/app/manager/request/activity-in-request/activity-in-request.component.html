@@ -1,0 +1,19 @@
+<div class="row align-items-center py-1">
+  <div class="col-md-2 status-sm status-{{activity.statusCode}}">{{getStatus(activity.statusCode).name}}</div>
+  <div class="col-md-9"> {{activity.description}}</div>
+  <div class="col-md-1 pr-1 pl-0 text-center"><button class="btn btn-sm btn-info" (click)="toggleOpen()">{{openButtonLabel}}</button></div>
+</div>
+<div class="row pt-2" *ngIf="isOpened">
+  <div class="col-md-9">
+    <div class="row"><div class="col-12"><b>Worker: </b> {{getWorker().name}}&nbsp;{{getWorker().surname}}</div></div>
+    <div class="row"><div class="col-12"><b>Type: </b> {{getActivityType().name}}</div></div>
+    <div class="row"><div class="col-12"><b>Register date: </b> {{activity.registerDate | date}}</div></div>
+    <div class="row" *ngIf="activity.endDate"><div class="col-12"><b>End Date:&nbsp;</b> {{activity.endDate | date}}</div></div>
+    <div class="row" *ngIf="activity.result"><div class="col-12"><b>Result:&nbsp;</b> {{activity.result}}</div></div>
+  </div>
+
+  <div class="col-md-3">
+    <div class="row pt-2"><div class="col-12"><button class="btn btn-warning btn-sm btn-block" (click)="launchEdit()">Edit</button></div></div>
+    <div class="row py-2"><div class="col-12"><button class="btn btn-danger btn-sm btn-block" (click)="remove()">Remove activity</button></div></div>
+  </div>
+</div>

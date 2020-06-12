@@ -1,0 +1,35 @@
+<div class="row align-items-center">
+  <div class="col-md-3 py-1 status status-{{request.statusCode}}">{{getStatus(request.statusCode).name}}</div>
+  <div class="col-md-6 py-1"><b>Description:</b> <br> {{request.description}}</div>
+  <div class="col-md-3 py-1"><button class="btn btn-info btn-block" (click)="toggleOpen()">{{openButtonLabel}}</button></div>
+</div>
+<div class="row pt-3" *ngIf="isOpened">
+  <div class="col-md-9">
+    <div class="row pb-2">
+      <div class="col-12 text-center">
+        <p class="h5"><b>Activities: </b></p>
+        <button class="btn btn-sm btn-success" *ngIf="request.statusCode != 'FIN' && request.statusCode != 'CAN'" (click)="launchNewActivity()">New activity</button>
+      </div>
+    </div>
+
+    <div class="text-center" *ngIf="activities.length == 0">There is no activities in this request.</div>
+    <div class="row">
+      <div class="col-12 card my-1" *ngFor="let activity of activities">
+        <app-activity-in-request [activity]="activity" [statuses]="statuses" (removed)="onActivityRemove($event)" (edited)="onActivityEdit($event)"></app-activity-in-request>
+      </div>
+    </div>
+
+
+  </div>
+
+
+  <div class="col-md-3">
+    <div class="row pt-2"><div class="col-12"> <b>Register Date:&nbsp;</b> {{request.registerDate | date}}</div></div>
+    <div class="row pt-2" *ngIf="request.endDate"><div class="col-12"><b>End Date:&nbsp;</b> {{request.endDate | date}}</div></div>
+    <div class="row pt-2"><div class="col-12"><b>Object:&nbsp;</b> {{object.name}}</div></div>
+    <div class="row pt-2" *ngIf="request.result"><div class="col-12"><b>Result:&nbsp;</b> {{request.result}}</div></div>
+    <div class="row pt-2"><div class="col-12"><button class="btn btn-warning btn-block" (click)="launchEdit()">Edit</button></div></div>
+    <div class="row pt-2"><div class="col-12"><button class="btn btn-danger btn-block" (click)="remove()">Remove request</button></div></div>
+  </div>
+</div>
+

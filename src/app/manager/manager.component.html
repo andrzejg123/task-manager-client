@@ -1,0 +1,37 @@
+<div class="row mt-3">
+  <div class="col-md-10 form-inline">
+    <label><span class="h5">Object:&nbsp;</span>
+      <select class="form-control" (change)="selectObject($event.target.value)">
+        <option value="0">---</option>
+        <option value="-1">Any</option>
+        <option *ngFor="let object of objects$ | async" value="{{object.id}}">{{object.name}}</option>
+      </select></label>&nbsp;
+    <button routerLink="/objects" class="btn btn-info">Manage objects</button>
+  </div>
+  <div class="col-md-2 text-center">
+    <button class="btn btn-success" (click)="launchNewRequest()">New request</button>
+  </div>
+</div>
+
+<div *ngIf="requests && requests.length > 0">
+  <div class="row pt-5">
+    <div class="col-12">
+      <p class="h3 text-center" *ngIf="selectedObjectId != -1">Your requests in {{objectService.getObject(selectedObjectId).name}}:</p>
+      <p class="h3 text-center" *ngIf="selectedObjectId == -1">Your requests:</p>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <div class="card p-2 mt-3" *ngFor="let request of requests">
+        <div class="container">
+          <app-request [request]="request" [object]="objectService.getObject(request.objectId)" (removed)="onRequestRemove($event)" (edited)="onRequestEdit($event)"></app-request>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+<div *ngIf="!requests || requests.length == 0">
+  Select object that has requests to display them.
+</div>

@@ -1,0 +1,26 @@
+<div>
+  <div class="row pt-5">
+    <div class="col-12 text-center">
+      <p class="h3">Objects:</p>
+      <button class="btn btn-success" (click)="launchNewObject()">New object</button>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <div class="card p-2 mt-3" *ngFor="let object of objects$ | async">
+        <div class="row text-center align-items-center">
+          <div class="col-md-3"><b>Name: </b><br>{{object.name}}</div>
+          <div class="col-md-3"><b>Type: </b><br>{{objectService.getObjectType(object.objectTypeCode).name}}</div>
+            <div *ngIf="getClient(object.clientId) as client" class="col-md-3"><b>Client: </b><br>{{client.name}} {{client.surname}}</div>
+            <div class="col-md-3">
+              <button class="btn btn-sm btn-warning btn-block" (click)="launchEdit(object)">Edit</button>
+              <button class="btn btn-sm btn-danger btn-block" (click)="remove(object)">Remove object</button>
+            </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
