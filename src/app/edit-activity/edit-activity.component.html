@@ -19,8 +19,8 @@
 
       <div class="form-group">
         <label for="worker">Worker</label>
-        <select class="form-control" id="worker" [(ngModel)]="activityPatch.workerId" name="workerId" required>
-          <option class="form-control-range" *ngFor="let worker of workers" [value]="worker.id">{{worker.name}} {{worker.surname}}</option>
+        <select class="form-control" id="worker" [(ngModel)]="activityPatch.workerId" name="workerId">
+          <option class="form-control-range" *ngFor="let worker of workers$ | async" [value]="worker.id">{{worker.name}} {{worker.surname}}</option>
         </select>
       </div>
     </div>

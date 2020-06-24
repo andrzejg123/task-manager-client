@@ -9,6 +9,7 @@ import {AuthenticationService} from '../_services/authentication.service';
 import {User} from '../_models/user';
 import {ActivityType} from '../_models/activity-type';
 import {UserService} from '../_services/user.service';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-edit-activity',
@@ -21,7 +22,7 @@ export class EditActivityComponent implements OnInit {
   activityPatch: ActivityPatch;
   activityProgressPatch: ActionProgressPatch;
   loggedUser: User;
-  workers: User[];
+  workers$: Observable<User[]>;
   activityTypes: ActivityType[];
 
   constructor(
@@ -52,9 +53,11 @@ export class EditActivityComponent implements OnInit {
     this.activityPatch.description = this.activity.description;
     this.loggedUser = this.authenticationService.currentUserValue;
 
-    this.userService.fetchUsers().subscribe(x => {
+    /*this.userService.fetchUsers().subscribe(x => {
       this.workers = this.userService.getWorkers();
-    });
+    });*/
+    this.userService.fetchUsers();
+    this.workers$ = this.userService.getWorkers();
     this.activityService.getActivityTypes().subscribe(x => {
       this.activityTypes = x;
     });

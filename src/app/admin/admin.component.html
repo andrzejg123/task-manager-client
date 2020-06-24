@@ -1,0 +1,38 @@
+<div class="row pt-3 text-center"><div class="col-12"><button class="btn btn-success" (click)="launchNewUser()">New user</button></div></div>
+<div class="row pt-5">
+  <div class="col-md-4">
+    <p class="h3 text-center">Managers:</p>
+
+    <div class="card px-3 py-2" *ngFor="let manager of managers$ | async">
+      <div class="row">
+        <div class="col-md-3">#{{manager.id}}</div>
+        <div class="col-md-6">{{manager.name}} {{manager.surname}}</div>
+        <div class="col-md-3"><button class="btn btn-sm btn-warning">Edit</button></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-4">
+    <p class="h3 text-center">Workers:</p>
+
+    <div class="card px-3 py-2" *ngFor="let worker of workers$ | async">
+      <div class="row">
+        <div class="col-md-3">#{{worker.id}}</div>
+        <div class="col-md-6">{{worker.name}} {{worker.surname}}</div>
+        <div class="col-md-3"><button class="btn btn-sm btn-warning">Edit</button></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-4">
+    <p class="h3 text-center">Clients:</p>
+
+    <div class="card px-3 py-2" *ngFor="let client of clients$ | async">
+      <div class="row">
+        <div class="col-md-3">#{{client.id}}</div>
+        <div class="col-md-6">{{client.name}} {{client.surname}}</div>
+        <div class="col-md-3"><button class="btn btn-sm btn-warning">Edit</button></div>
+      </div>
+    </div>
+  </div>
+</div>

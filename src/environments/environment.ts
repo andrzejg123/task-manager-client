@@ -3,7 +3,8 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  apiUrl: 'https://task-manager-rest-apii.herokuapp.com/task-manager-rest-api'
 };
 
 /*

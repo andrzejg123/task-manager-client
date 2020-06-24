@@ -21,22 +21,23 @@ export class ObjectsComponent implements OnInit {
 
   objects$: Observable<ObjectGet[]>;
   //objectTypes$: Observable<ObjectTypeGet[]>;
-  clients: User[];
+  //clients: User[];
+  clients$: Observable<User[]>;
 
   constructor(
     public objectService: ObjectService,
-    private userService: UserService,
+    public userService: UserService,
     private modalService: NgbModal
   ) { }
 
   launchNewObject() {
     const newObjectModal = this.modalService.open(NewObjectComponent, {backdrop: 'static', size: 'lg'});
-    newObjectModal.componentInstance.clients = this.clients;
+    //newObjectModal.componentInstance.clients = this.clients;
     newObjectModal.result.then(x => {}).catch(e => {});
   }
 
-  getClient(clientId: number): User {
-    return this.clients.find(x => x.id === clientId);
+  getClient(clients: User[], clientId: number): User {
+    return clients.find(x => x.id === clientId);
   }
 
   launchEdit(object: ObjectGet) {
@@ -54,9 +55,11 @@ export class ObjectsComponent implements OnInit {
   ngOnInit(): void {
     this.objects$ = this.objectService.getObjects();
     this.objectService.getObjectTypes();
-    this.userService.fetchUsers().pipe(take(1)).subscribe(x => {
+    /*this.userService.fetchUsers().pipe(take(1)).subscribe(x => {
       this.clients = this.userService.getClients();
-    });
+    });*/
+    this.userService.fetchUsers();
+    this.clients$ = this.userService.getClients();
 
   }
 

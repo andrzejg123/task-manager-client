@@ -8,6 +8,7 @@ import {UserService} from '../_services/user.service';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {EditActivityComponent} from '../edit-activity/edit-activity.component';
 import {take} from 'rxjs/operators';
+import {StatusService} from '../_services/status.service';
 
 @Component({
   selector: 'app-activity-base',
@@ -15,14 +16,15 @@ import {take} from 'rxjs/operators';
 })
 export class ActivityBaseComponent implements OnInit {
   @Input() activity: ActivityGet;
-  @Input() statuses: Status[];
   @Output() edited = new EventEmitter<ActivityGet>();
+  statuses: Status[];
   activityTypes: ActivityType[];
   openButtonLabel = 'Open';
   isOpened = false;
 
   constructor(
     protected activityService: ActivityService,
+    private statusService: StatusService,
     protected modalService: NgbModal
   ) { }
 
@@ -54,6 +56,9 @@ export class ActivityBaseComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.statusService.getStatuses().pipe(take(1)).subscribe(x => {
+      this.statuses = x;
+    });
   }
 
 }

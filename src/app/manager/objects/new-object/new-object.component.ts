@@ -6,6 +6,7 @@ import {ObjectTypeGet} from '../../../_models/object-type-get';
 import {ObjectPost} from '../../../_models/object-post';
 import {take} from 'rxjs/operators';
 import {User} from '../../../_models/user';
+import {UserService} from '../../../_services/user.service';
 
 @Component({
   selector: 'app-new-object',
@@ -14,12 +15,14 @@ import {User} from '../../../_models/user';
 })
 export class NewObjectComponent implements OnInit {
 
-  @Input() clients: User[];
+  //@Input() clients: User[];
+  clients$: Observable<User[]>;
   objectTypes$: Observable<ObjectTypeGet[]>;
   objectPost = new ObjectPost();
 
   constructor(
     private objectService: ObjectService,
+    private userService: UserService,
     public modal: NgbActiveModal
   ) { }
 
@@ -31,6 +34,7 @@ export class NewObjectComponent implements OnInit {
 
   ngOnInit(): void {
     this.objectTypes$ = this.objectService.getObjectTypes();
+    this.clients$ = this.userService.getClients();
   }
 
 }

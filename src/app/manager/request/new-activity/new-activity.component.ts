@@ -6,6 +6,7 @@ import {UserService} from '../../../_services/user.service';
 import {ActivityService} from '../../../_services/activity.service';
 import {Request} from '../../../_models/request';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-new-activity',
@@ -16,7 +17,7 @@ export class NewActivityComponent implements OnInit {
 
   @Input() request: Request;
   activityPost = new ActivityPost();
-  workers: User[];
+  workers$: Observable<User[]>;
   activityTypes: ActivityType[];
 
   constructor(
@@ -33,9 +34,11 @@ export class NewActivityComponent implements OnInit {
 
   ngOnInit(): void {
     this.activityPost.requestId = this.request.id;
-    this.userService.fetchUsers().subscribe(x => {
+    /*this.userService.fetchUsers().subscribe(x => {
       this.workers = this.userService.getWorkers();
-    });
+    });*/
+    this.userService.fetchUsers();
+    this.workers$ = this.userService.getWorkers();
     this.activityService.getActivityTypes().subscribe(x => {
       this.activityTypes = x;
     });

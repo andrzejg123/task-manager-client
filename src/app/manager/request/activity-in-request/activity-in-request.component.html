@@ -5,7 +5,9 @@
 </div>
 <div class="row pt-2" *ngIf="isOpened">
   <div class="col-md-9">
-    <div class="row"><div class="col-12"><b>Worker: </b> {{getWorker().name}}&nbsp;{{getWorker().surname}}</div></div>
+    <div class="row"><div class="col-12"><b>Worker: </b><div *ngIf="!getWorker() else worker">not assigned</div>
+      <ng-template #worker>{{getWorker().name}}&nbsp;{{getWorker().surname}}</ng-template></div>
+    </div>
     <div class="row"><div class="col-12"><b>Type: </b> {{getActivityType().name}}</div></div>
     <div class="row"><div class="col-12"><b>Register date: </b> {{activity.registerDate | date}}</div></div>
     <div class="row" *ngIf="activity.endDate"><div class="col-12"><b>End Date:&nbsp;</b> {{activity.endDate | date}}</div></div>

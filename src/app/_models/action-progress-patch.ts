@@ -1,4 +1,4 @@
-export class RequestPatchProgress {
+export class ActionProgressPatch {
   statusCode: string;
   result: string;
 }

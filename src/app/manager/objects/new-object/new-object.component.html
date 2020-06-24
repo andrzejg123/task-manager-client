@@ -20,7 +20,7 @@
     <div class="form-group">
       <label for="client">Client</label>
       <select class="form-control" id="client" [(ngModel)]="objectPost.clientId" name="clientId" required>
-        <option class="form-control-range" *ngFor="let client of clients" [value]="client.id">{{client.name}} {{client.surname}}</option>
+        <option class="form-control-range" *ngFor="let client of clients$ | async" [value]="client.id">{{client.name}} {{client.surname}}</option>
       </select>
     </div>
 

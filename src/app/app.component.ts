@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import {User} from './_models/user';
+import {Router} from '@angular/router';
+import {AuthenticationService} from './_services/authentication.service';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +9,18 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'task-manager-client';
+  currentUser: User;
+
+  constructor(
+    private router: Router,
+    public authenticationService: AuthenticationService
+  ) {
+    this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
+
+  }
+
+  logout() {
+    this.authenticationService.logout();
+    this.router.navigate(['/login']);
+  }
 }

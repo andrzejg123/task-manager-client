@@ -10,6 +10,8 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {EditActivityComponent} from '../../../edit-activity/edit-activity.component';
 import {ActivityBaseComponent} from '../../../activity-base/activity-base.component';
 import {take} from 'rxjs/operators';
+import {StatusService} from '../../../_services/status.service';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-activity-in-request',
@@ -19,18 +21,19 @@ import {take} from 'rxjs/operators';
 export class ActivityInRequestComponent extends ActivityBaseComponent implements OnInit {
 
   @Output() removed = new EventEmitter<ActivityGet>();
-  workers: User[];
+  workers$: Observable<User[]>;
   currentWorker: User;
 
   constructor(
     activityService: ActivityService,
+    statusService: StatusService,
     modalService: NgbModal,
     private userService: UserService
-  ) { super(activityService, modalService); }
+  ) { super(activityService, statusService, modalService); }
 
   getWorker() {
     if(!this.currentWorker)
-      this.currentWorker = this.workers.find(x => x.id === this.activity.workerId);
+      this.currentWorker = this.userService.getUserById(this.activity.workerId);
 
     return this.currentWorker;
   }
@@ -45,16 +48,18 @@ export class ActivityInRequestComponent extends ActivityBaseComponent implements
 
   toggleOpen() {
     super.toggleOpen();
-    if(!this.workers) {
-      this.userService.fetchUsers().pipe(take(1)).subscribe(_ => {
+    if(!this.workers$) {
+      /*this.userService.fetchUsers().pipe(take(1)).subscribe(_ => {
         //workers are ready when users are fetched
         this.workers = this.userService.getWorkers();
-      });
+      });*/
+      this.userService.fetchUsers();
+      this.workers$ = this.userService.getWorkers();
     }
   }
 
   ngOnInit(): void {
-
+    super.ngOnInit();
 
   }
 

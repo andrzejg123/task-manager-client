@@ -15,7 +15,7 @@
     <div class="text-center" *ngIf="activities.length == 0">There is no activities in this request.</div>
     <div class="row">
       <div class="col-12 card my-1" *ngFor="let activity of activities">
-        <app-activity-in-request [activity]="activity" [statuses]="statuses" (removed)="onActivityRemove($event)" (edited)="onActivityEdit($event)"></app-activity-in-request>
+        <app-activity-in-request [activity]="activity" (removed)="onActivityRemove($event)" (edited)="onActivityEdit($event)"></app-activity-in-request>
       </div>
     </div>
 

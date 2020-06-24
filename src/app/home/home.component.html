@@ -1,1 +1,3 @@
-<app-manager *ngIf="currentUser.roleCode == 'MAN'"></app-manager>
+<app-manager *ngIf="currentUser.roleCode === 'MAN'"></app-manager>
+<app-worker *ngIf="currentUser.roleCode === 'WOR'"></app-worker>
+<app-admin *ngIf="currentUser.roleCode === 'ADM'"></app-admin>
