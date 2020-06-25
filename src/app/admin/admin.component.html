@@ -1,4 +1,18 @@
 <div class="row pt-3 text-center"><div class="col-12"><button class="btn btn-success" (click)="launchNewUser()">New user</button></div></div>
+<div class="row pt-5" *ngIf="(inactives$ | async).length > 0">
+  <div class="col-md-4 offset-md-4">
+  <p class="h3 text-center">Inactive users:</p>
+
+  <div class="card px-3 py-2" *ngFor="let inactive of inactives$ | async">
+    <div class="row">
+      <div class="col-md-3">#{{inactive.id}}</div>
+      <div class="col-md-6">{{inactive.name}} {{inactive.surname}}</div>
+      <div class="col-md-3"><button class="btn btn-sm btn-warning" (click)="launchEditUser(inactive)">Edit</button></div>
+    </div>
+  </div>
+  </div>
+</div>
+
 <div class="row pt-5">
   <div class="col-md-4">
     <p class="h3 text-center">Managers:</p>
@@ -7,7 +21,7 @@
       <div class="row">
         <div class="col-md-3">#{{manager.id}}</div>
         <div class="col-md-6">{{manager.name}} {{manager.surname}}</div>
-        <div class="col-md-3"><button class="btn btn-sm btn-warning">Edit</button></div>
+        <div class="col-md-3"><button class="btn btn-sm btn-warning" (click)="launchEditUser(manager)">Edit</button></div>
       </div>
     </div>
   </div>
@@ -19,7 +33,7 @@
       <div class="row">
         <div class="col-md-3">#{{worker.id}}</div>
         <div class="col-md-6">{{worker.name}} {{worker.surname}}</div>
-        <div class="col-md-3"><button class="btn btn-sm btn-warning">Edit</button></div>
+        <div class="col-md-3"><button class="btn btn-sm btn-warning" (click)="launchEditUser(worker)">Edit</button></div>
       </div>
     </div>
   </div>
@@ -31,7 +45,7 @@
       <div class="row">
         <div class="col-md-3">#{{client.id}}</div>
         <div class="col-md-6">{{client.name}} {{client.surname}}</div>
-        <div class="col-md-3"><button class="btn btn-sm btn-warning">Edit</button></div>
+        <div class="col-md-3"><button class="btn btn-sm btn-warning" (click)="launchEditUser(client)">Edit</button></div>
       </div>
     </div>
   </div>

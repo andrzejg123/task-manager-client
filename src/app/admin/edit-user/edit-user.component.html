@@ -1,5 +1,5 @@
 <div class="modal-header">
-  <div class="modal-title"><h2>Add new user</h2></div>
+  <div class="modal-title"><h2>Update user</h2></div>
 </div>
 
 <form (ngSubmit)="submit()" #form="ngForm">
@@ -7,32 +7,27 @@
 
     <div class="form-group">
       <label for="name">Name</label>
-      <input type="text" class="form-control" id="name" [(ngModel)]="userPost.name" name="name" required>
+      <input type="text" class="form-control" id="name" [(ngModel)]="userPatch.name" name="name" required>
     </div>
 
     <div class="form-group">
       <label for="surname">Surname</label>
-      <input type="text" class="form-control" id="surname" [(ngModel)]="userPost.surname" name="surname" required>
+      <input type="text" class="form-control" id="surname" [(ngModel)]="userPatch.surname" name="surname" required>
     </div>
 
     <div class="form-group">
-      <label for="username">Username</label>
-      <input type="text" class="form-control" id="username" [(ngModel)]="userPost.username" name="username" required>
-    </div>
-
-    <div class="form-group">
-      <label for="password">Password</label>
-      <input type="password" class="form-control" id="password" [(ngModel)]="userPost.password" name="password" required>
+      <label for="password">New password (leave blank for old password)</label>
+      <input type="password" class="form-control" id="password" [(ngModel)]="userPatch.password" name="password">
     </div>
 
     <div class="form-group">
       <label for="email">Email</label>
-      <input type="email" class="form-control" id="email" [(ngModel)]="userPost.email" name="email" required>
+      <input type="email" class="form-control" id="email" [(ngModel)]="userPatch.email" name="email" required>
     </div>
 
     <div class="form-group">
       <label for="role">Role</label>
-      <select class="form-control" id="role" [(ngModel)]="userPost.roleCode" name="roleCode" required>
+      <select class="form-control" id="role" [(ngModel)]="userPatch.roleCode" name="roleCode">
         <option class="form-control-range" [value]="null">Empty (inactive user)</option>
         <option class="form-control-range" *ngFor="let role of roles$ | async" [hidden]="role.code === 'ADM'" [value]="role.code">{{role.name}}</option>
       </select>

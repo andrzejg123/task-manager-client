@@ -23,6 +23,9 @@ export class NewUserComponent implements OnInit {
   ) { }
 
   submit() {
+    if(this.userPost.roleCode === 'null')
+      this.userPost.roleCode = null;
+    
     this.userService.registerUser(this.userPost).pipe(take(1)).subscribe(x => {
       this.modal.close(x);
     });

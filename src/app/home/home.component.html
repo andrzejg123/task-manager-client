@@ -1,3 +1,4 @@
 <app-manager *ngIf="currentUser.roleCode === 'MAN'"></app-manager>
 <app-worker *ngIf="currentUser.roleCode === 'WOR'"></app-worker>
 <app-admin *ngIf="currentUser.roleCode === 'ADM'"></app-admin>
+<div *ngIf="currentUser.roleCode === null">You are not activated yet. Ask Admin to activate You.</div>

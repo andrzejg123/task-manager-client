@@ -24,6 +24,7 @@ import { WorkerComponent } from './worker/worker.component';
 import { ActivityInWorkerComponent } from './worker/activity-in-worker/activity-in-worker.component';
 import { AdminComponent } from './admin/admin.component';
 import { NewUserComponent } from './admin/new-user/new-user.component';
+import { EditUserComponent } from './admin/edit-user/edit-user.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { NewUserComponent } from './admin/new-user/new-user.component';
     WorkerComponent,
     ActivityInWorkerComponent,
     AdminComponent,
-    NewUserComponent
+    NewUserComponent,
+    EditUserComponent
   ],
   imports: [
     BrowserModule,

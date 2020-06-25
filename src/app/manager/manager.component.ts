@@ -54,15 +54,6 @@ export class ManagerComponent implements OnInit {
     }).catch(e => {});
   }
 
-  tt() {
-    const op = new ObjectPost();
-    op.name = 'tttaaa';
-    op.objectTypeCode = 'PRG';
-    op.clientId = 3;
-    this.objectService.createObject(op).subscribe(x => {
-      console.log('from comp' + x.id);
-    }, () => {}, () => console.log('completeComp'));
-  }
 
   /*getObject(objectId: number): ObjectGet {
     return this.objects.find(x => x.id === objectId);

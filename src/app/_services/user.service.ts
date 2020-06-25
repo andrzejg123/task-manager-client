@@ -23,6 +23,9 @@ export class UserService {
   private workers$: Observable<User[]> = this.workers.asObservable();
   private clients$: Observable<User[]> = this.clients.asObservable();
   private managers$: Observable<User[]> = this.managers.asObservable();
+  private inactives: BehaviorSubject<User[]> = new BehaviorSubject([]);
+  private inactives$: Observable<User[]> = this.inactives.asObservable();
+
   private roles: BehaviorSubject<Role[]> = new BehaviorSubject([]);
   private roles$: Observable<Role[]> = this.roles.asObservable();
 
@@ -41,6 +44,7 @@ export class UserService {
         this.workers.next(x.filter(y => y.roleCode === 'WOR'));
         this.clients.next(x.filter(y => y.roleCode === 'CLI'));
         this.managers.next(x.filter(y => y.roleCode === 'MAN'));
+        this.inactives.next(x.filter(y => y.roleCode === null));
 
       });
     }
@@ -48,41 +52,106 @@ export class UserService {
     return this.users;
   }
 
+  private placeUserInArray(user: User) {
+    let users;
+    switch (user.roleCode) {
+      case 'MAN':
+        users = this.managers.value;
+        users.unshift(user);
+        this.managers.next(users);
+        break;
+      case 'WOR':
+        users = this.workers.value;
+        users.unshift(user);
+        this.workers.next(users);
+        break;
+      case 'CLI':
+        users = this.clients.value;
+        users.unshift(user);
+        this.clients.next(users);
+        break;
+      default:
+        users = this.inactives.value;
+        users.unshift(user);
+        this.inactives.next(users);
+        break;
+    }
+  }
+
+  private deleteUserFromArray(user: User) {
+    let users;
+    switch(user.roleCode) {
+      case 'MAN':
+        users = this.managers.value;
+        users.splice(users.findIndex(x => x.id === user.id), 1);
+        this.managers.next(users);
+        break;
+      case 'WOR':
+        users = this.workers.value;
+        users.splice(users.findIndex(x => x.id === user.id), 1);
+        this.workers.next(users);
+        break;
+      case 'CLI':
+        users = this.clients.value;
+        users.splice(users.findIndex(x => x.id === user.id), 1);
+        this.clients.next(users);
+        break;
+      default:
+        users = this.inactives.value;
+        users.splice(users.findIndex(x => x.id === user.id), 1);
+        this.inactives.next(users);
+        break;
+    }
+  }
+
+  private replaceUserInArray(user: User) {
+    let users;
+    switch(user.roleCode) {
+      case 'MAN':
+        users = this.managers.value;
+        users[users.findIndex(x => x.id === user.id)] = user;
+        this.managers.next(users);
+        break;
+      case 'WOR':
+        users = this.workers.value;
+        users[users.findIndex(x => x.id === user.id)] = user;
+        this.workers.next(users);
+        break;
+      case 'CLI':
+        users = this.clients.value;
+        users[users.findIndex(x => x.id === user.id)] = user;
+        this.clients.next(users);
+        break;
+      default:
+        users = this.inactives.value;
+        users[users.findIndex(x => x.id === user.id)] = user;
+        this.inactives.next(users);
+        break;
+    }
+  }
+
   registerUser(userPost: UserPost): Observable<User> {
     const user = this.http.post<User>(`${environment.apiUrl}/user/register`, userPost).pipe(shareReplay());
-    console.log('regg');
+
     user.pipe(take(1)).subscribe(x => {
-      let users;
-      console.log('subb');
-      switch (x.roleCode) {
-        case 'MAN':
-          users = this.managers.value;
-          users.unshift(x);
-          this.managers.next(users);
-          console.log('mann');
-          break;
-        case 'WOR':
-          users = this.workers.value;
-          users.unshift(x);
-          this.workers.next(users);
-          console.log('worr');
-          break;
-        case 'CLI':
-          users = this.clients.value;
-          users.unshift(x);
-          this.clients.next(users);
-          console.log('clii');
-          break;
-        default:
-          console.log('deffff');
-          break;
-      }
+      this.placeUserInArray(x);
     });
     return user;
   }
 
-  updateUser(userPatch: UserPatch): Observable<User> {
-    return null;
+  updateUser(userPatch: UserPatch, oldUser: User): Observable<User> {
+    const result = this.http.patch<User>(`${environment.apiUrl}/user/` + oldUser.id + `/`, userPatch).pipe(shareReplay());
+
+    result.pipe(take(1)).subscribe(x => {
+      if(oldUser.roleCode !== userPatch.roleCode) {
+        this.deleteUserFromArray(oldUser);
+        this.placeUserInArray(x);
+      }
+      else
+        this.replaceUserInArray(x);
+
+    });
+    return result;
   }
 
   getWorkers(): Observable<User[]> {
@@ -91,6 +160,10 @@ export class UserService {
 
     return this.workers;*/
     return this.workers$;
+  }
+
+  getInactives(): Observable<User[]> {
+    return this.inactives$;
   }
 
   getClients(): Observable<User[]> {
