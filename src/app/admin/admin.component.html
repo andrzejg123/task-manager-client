@@ -3,7 +3,7 @@
   <div class="col-md-4 offset-md-4">
   <p class="h3 text-center">Inactive users:</p>
 
-  <div class="card px-3 py-2" *ngFor="let inactive of inactives$ | async">
+  <div class="card px-3 py-2 my-2" *ngFor="let inactive of inactives$ | async">
     <div class="row">
       <div class="col-md-3">#{{inactive.id}}</div>
       <div class="col-md-6">{{inactive.name}} {{inactive.surname}}</div>
@@ -17,7 +17,7 @@
   <div class="col-md-4">
     <p class="h3 text-center">Managers:</p>
 
-    <div class="card px-3 py-2" *ngFor="let manager of managers$ | async">
+    <div class="card px-3 py-2 my-2" *ngFor="let manager of managers$ | async">
       <div class="row">
         <div class="col-md-3">#{{manager.id}}</div>
         <div class="col-md-6">{{manager.name}} {{manager.surname}}</div>
@@ -29,7 +29,7 @@
   <div class="col-md-4">
     <p class="h3 text-center">Workers:</p>
 
-    <div class="card px-3 py-2" *ngFor="let worker of workers$ | async">
+    <div class="card px-3 py-2 my-2" *ngFor="let worker of workers$ | async">
       <div class="row">
         <div class="col-md-3">#{{worker.id}}</div>
         <div class="col-md-6">{{worker.name}} {{worker.surname}}</div>
@@ -41,7 +41,7 @@
   <div class="col-md-4">
     <p class="h3 text-center">Clients:</p>
 
-    <div class="card px-3 py-2" *ngFor="let client of clients$ | async">
+    <div class="card px-3 py-2 my-2" *ngFor="let client of clients$ | async">
       <div class="row">
         <div class="col-md-3">#{{client.id}}</div>
         <div class="col-md-6">{{client.name}} {{client.surname}}</div>
